@@ -1,22 +1,7 @@
-'''
-kpapp: Main module
-
-Copyright 2018, Kristoffer Paulsson
-Licensed under MIT.
-'''
-
-
-def main():
-    '''
-    Main function of the boilerplate code is the entry point of the 'kpapp' executable script (defined in setup.py).
-    
-    Use doctests, those are very helpful.
-    
-    >>> main()
-    Hello
-    >>> 2 + 2
-    4
-    '''
-    
-    print("Hello")
-
+from .application import Application, Daemonizer
+from .service import Service
+from .thrcnt import ThresholdCounter
+from .task import Task
+from .db import Database
+from .common import conf, logger
+from .utils import check_type
