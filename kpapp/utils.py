@@ -1,3 +1,8 @@
+from types import *
+"""
+The utils.py module is the module that containse all minor extras that is used
+globally in the application
+"""
 
 def check_type(instance, type):
 	"""
@@ -11,7 +16,21 @@ def check_type(instance, type):
 	check_type(result, (NoneType, StringType))
 	"""
 	if not isinstance(instance, type):
-		raise TypeError('Instance not expected type')
+		raise TypeError('Instance expected type {0}, but got: {1}', type(type),  type(instance))
+
+def check_class(instance, type):
+	"""
+	check_class is a helper function. Tests for a subclass and raises a
+	standardized TypeError exception.
+
+	Instance	The instanced variable
+	type		The class type of expected type, or tuple of them
+
+	Example:
+	check_class(result, (Model, BaseModel))
+	"""
+	if not issubclass(instance, type):
+		raise TypeError('Subclass expected type {0}, but got: {1}', type(type), type(instance))
 
 def format_exception(exception_type, class_name = 'No classname', message = 'Formated exception', debug_info = {}):
 	"""
@@ -35,11 +54,16 @@ def format_exception(exception_type, class_name = 'No classname', message = 'For
 		}
 	)
 	"""
-	check_type(exception_type, Exception)
+	check_class(exception_type, Exception)
 	check_type(class_name, StringType)
 	check_type(message, StringType)
 	check_type(debug_info, DictType)
-	return exception_type('%s: "%s"', class_name, message, args=debug_info)
+
+	debug = []
+	for k in debug_info:
+		debug.append('{0}: {1}'.format(k, debug_info[k]))
+	exc =  exception_type('{0}, "{1}" - debug: ({2})'.format(class_name, message, ', '.join(debug)))
+	return exc
 
 def log_format_info(event_str, data = {}):
 	"""
@@ -54,14 +78,15 @@ def log_format_info(event_str, data = {}):
 	try:
 		...
 	except Exception as e:
-		logger.warning(log_format_error(e, 'Result missing from function call X'), exc_info=True)
+		logger.warning(log_format_info(e, 'Result missing from function call X'), exc_info=True)
 	"""
 	check_type(event_str, StringType)
 	check_type(data, DictType)
-	info = ''
-	for k, v in data:
-		info += format('%s: %s, ', k, v)
-	return format('%s. Info: (%s)', event_str, info)
+
+	info = []
+	for k in data:
+		info.append('{0}: {1}'.format(k, data[k]))
+	return '{0}. Info: {1}'.format(event_str, ', '.join(info))
 
 def log_format_error(caught_exception, event_str):
 	"""
@@ -80,7 +105,5 @@ def log_format_error(caught_exception, event_str):
 	"""
 	check_type(caught_exception, Exception)
 	check_type(event_str, StringType)
-	debug = '\n'
-	for k, v in caught_exception.args:
-		debug += format('%s: `%s`\n', k, v)
-	return format('%s (%s) - debug: %s', event_str, caught_exception, debug)
+	
+	return '{0}, Error: {1}:{2}'.format(event_str, str(type(caught_exception)), caught_exception)

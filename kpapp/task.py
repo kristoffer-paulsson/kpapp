@@ -4,6 +4,11 @@ import sys
 from .common import logger
 from .service import Service
 
+"""
+The task.py module containes classes needed to manage multithreading and running
+tasks within the application.
+"""
+
 class Signal:
 	"""
 	Signal class is used by the TaskManager to communicate with the Task
@@ -64,7 +69,7 @@ class Task:
 		"""
 		Instructs the run() method to sleep for "seconds" seconds.
 		"""
-		self.__idle = seconds
+		self.__idle = int(seconds)
 
 	def _config(self):
 		"""

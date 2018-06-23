@@ -4,6 +4,12 @@ from peewee import SqliteDatabase, Database as PWDatabase
 from .service import Service
 from .common import conf
 
+"""
+The db.py module containes application wrappers and helper classes to work with
+databases within the application such as the Database wrapper class and the
+DatabaseManager class.
+"""
+
 class Database:
 	"""
 	A Database wrapper for Database and ORM connection for peewee.

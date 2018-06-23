@@ -3,6 +3,11 @@ import os
 import yaml
 import logging
 
+"""
+The common.py script is where all globally accessable variables and instances
+are set up.
+"""
+
 class Config:
 	__app_path = os.path.dirname(os.path.abspath(sys.argv[0]))
 	__usr_path = os.path.expanduser('~')

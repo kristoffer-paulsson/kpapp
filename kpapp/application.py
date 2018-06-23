@@ -9,6 +9,12 @@ from .task import TaskManager
 from .tasks.dummy import Dummy
 from .db import DatabaseManager
 
+"""
+The application.py module containes all classes needed for the major execution
+and running of the application, such as the Application class and the
+Daemonizer
+"""
+
 class Application:
 	"""
 	Main Application class. This class should be subclassed for every new
