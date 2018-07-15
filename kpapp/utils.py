@@ -106,4 +106,4 @@ def log_format_error(caught_exception, event_str):
 	check_type(caught_exception, Exception)
 	check_type(event_str, StringType)
 	
-	return '{0}, Error: {1}:{2}'.format(event_str, str(type(caught_exception)), caught_exception)
+	return '{0}, Class: {1}:{2}'.format(event_str, str(type(caught_exception)), caught_exception)

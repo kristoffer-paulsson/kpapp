@@ -20,7 +20,7 @@ class TestCheckType(unittest.TestCase):
         self.assertTrue(True == True)
 
     def test_class(self):
-        self.assertRaises(TypeError, 'check_type', instance=RuntimeError, type=Exception)
+        self.assertRaises(TypeError, 'check_type', instance=RuntimeError(), type=Exception)
 
 class TestCheckClass(unittest.TestCase):
 
@@ -28,7 +28,7 @@ class TestCheckClass(unittest.TestCase):
         self.assertRaises(TypeError, 'check_class', instance=54353, type=types.StringType)
 
     def test_class(self):
-        self.assertRaises(TypeError, 'check_class', instance=RuntimeError, type=Exception)
+        self.assertRaises(TypeError, 'check_class', instance=RuntimeError(), type=Exception)
 
 class TestFormatException(unittest.TestCase):
 
@@ -78,7 +78,7 @@ class TestLogFormatError(unittest.TestCase):
         )
 
         str_res = log_format_error(e, 'Business transaction failed')
-        self.assertTrue(str_res == 'Business transaction failed, Error: <type \'exceptions.RuntimeError\'>:TestLogFormatError, "Unexpected result" - debug: (id: 45654654767, user: User Name)')
+        self.assertTrue(str_res == 'Business transaction failed, Class: <type \'exceptions.RuntimeError\'>:TestLogFormatError, "Unexpected result" - debug: (id: 45654654767, user: User Name)')
 
     def test_format_wrong(self):
         debug = {
@@ -92,9 +92,8 @@ class TestLogFormatError(unittest.TestCase):
             debug
         )
 
-        str = log_format_error(e, 'Business transaction failed')
-        self.assertFalse(str == 'Business transaction complete, Error: <type \'exceptions.RuntimeError\'>:TestLogFormatError, "Unexpected result" - debug: (id: 45654654767, user: User Name)')
-
+        str_res = log_format_error(e, 'Business transaction failed')
+        self.assertFalse(str_res == 'Business transaction complete, Class: <type \'exceptions.RuntimeError\'>:TestLogFormatError, "Unexpected result" - debug: (id: 45654654767, user: User Name)')
 
 if __name__ == '__main__':
     unittest.main()
